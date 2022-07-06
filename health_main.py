@@ -7,15 +7,15 @@ Original file is located at
     https://colab.research.google.com/drive/1VuJR-BCYklaOeJZXKAVmTR6ufH6KClH_
 """
 
-!pip install geopandas
+#!pip install geopandas
 
-!pip install pyshp
+#!pip install pyshp
 
 import geopandas as gpd
 import pandas as pd
 import numpy as np
 
-!git clone https://github.com/vik4114/map.git
+#!git clone https://github.com/vik4114/map.git
 
 import shapefile
 df1 = gpd.read_file('map/District_Boundary.shp')
@@ -46,7 +46,7 @@ df1.plot(figsize = (8,8))
 df1 = df1.rename(columns={'KGISDist_1': 'District'})
 
 import pandas as pd
-zones = pd.read_csv ("/content/drive/MyDrive/karnataka-health/dataset.csv")
+zones = pd.read_csv ("/home/gourab337/Desktop/karnataka-health-visualizer/dataset.csv")
 
 # zones = pd.read_csv('drive/MyDrive/31.csv')
 
@@ -181,10 +181,11 @@ p.add_tools(HoverTool(renderers = [states],
 from datetime import datetime
 now = datetime.now()
 
-current_time = now.strftime("%H:%M:%S")
-st='plot'+current_time+'.html'
+#current_time = now.strftime("%H:%M:%S")
+#st='plot'+current_time+'.html'
+st='plot.html'
 output_file(st, mode='inline')
 save(q)
-from google.colab import files
-files.download(st)
+# from google.colab import files
+# files.download(st)
 

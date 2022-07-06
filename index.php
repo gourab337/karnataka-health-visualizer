@@ -2,7 +2,8 @@
     <header class="header-banner" id="i28v">
       <div class="container-width" id="iv52">
         <div class="logo-container" id="i8pl">
-          <div class="logo" id="i9wk">Indian Institute of Information Technology, Dharwad
+          <div class="logo" id="i9wk">
+            <img src=iiitlogo.png alt="Indian Institute of Information Technology, Dharwad" style="width:300px; height:86px" />
           </div>
         </div>
         <nav class="menu" id="i52r">
@@ -55,23 +56,20 @@
 <div class="am-post" id="irv7z">Last submitted at: <?php echo gmdate("Y-m-d\ H:i:s\ ", $t+19800); ?>
 </div>
 <br><br>
-<input type="button" id='visualize' name="visualizebutton" value=" Visualize " onclick="goPython()">
-<br><br>
-<script type=text/javascript src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script>
- 
-    function goPython(){
-        $.ajax({
-        url: "MYSCRIPT.py",
-        context: document.body
-        }).done(function() {
-         alert('Your visualisation is ready! 🚀🚀');;
-        });
-    }
-    
+<?php
 
+?>
+
+<form method="POST" action=<?php exec('python3 health_main.py') ?>>
+<button type="submit" onclick="alertFunction()" >Visualize</button>
+<script> 
+function alertFunction() { alert("Your map has been plotted 🚀🚀"); }
 </script>
+</form>
+<br><br>
+
+
 
 <button onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
           </div>
@@ -101,7 +99,7 @@
       background-size:contain, cover;
     }
     .container-width{
-      width:90%;
+      width:100%;
       max-width:1150px;
       margin:0 auto;
     }
@@ -112,7 +110,8 @@
     .logo{
       background-color:#fff;
       border-radius:5px;
-      width:130px;
+      height: 4px;
+      width: 1px;
       padding:10px;
       min-height:30px;
       text-align:center;
@@ -126,7 +125,7 @@
     }
     .menu-item{
       float:right;
-      font-size:15px;
+      font-size:17px;
       color:black;
       width:400px;
       padding:10px;
