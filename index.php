@@ -1,3 +1,4 @@
+<link rel="shortcut icon" href="iiitshort.png" type="image/x-icon"/>
 <body>
     <header class="header-banner" id="i28v">
       <div class="container-width" id="iv52">
@@ -7,7 +8,7 @@
           </div>
         </div>
         <nav class="menu" id="i52r">
-          <div class="menu-item" id="ie64">Center for Geospatial Analytics Research
+          <div class="menu-item" id="ie64">Karnataka Telemedicine District-wise Data Visualizer
           </div>
         </nav>
         <div class="clearfix">
@@ -61,17 +62,17 @@
 
 ?>
 
-<form method="POST" action=<?php exec('python3 health_main.py') ?>>
+<form action="visualize.php">
 <button type="submit" onclick="alertFunction()" >Visualize</button>
 <script> 
-function alertFunction() { alert("Your map has been plotted 🚀🚀"); }
+function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
 </script>
 </form>
 <br><br>
 
 
 
-<button onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
+<!-- <button onclick="window.location.href='plot.html'">Show my Plot 🔥</button> -->
           </div>
         </div>
       </div>

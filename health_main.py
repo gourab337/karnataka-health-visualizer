@@ -42,7 +42,7 @@ beng_y = [y.pop(20)]
 df1 = df1.rename(columns={'KGISDist_1': 'District'})
 
 import pandas as pd
-zones = pd.read_csv ("dataset.csv")
+zones = pd.read_csv ("uploads/dataset.csv")
 
 # zones = pd.read_csv('drive/MyDrive/31.csv')
 
@@ -162,7 +162,7 @@ color_mapper_beng = CategoricalColorMapper(palette = [green[-2]], factors = ["Re
 #bengaluru
 
 # Create figure object.
-q = figure(title = 'Red, Green District of Covid19',
+q = figure(title = 'Telemedicine Facility Utilization',
            plot_height = 2000 ,
            plot_width = 1500, 
            toolbar_location = 'right',
