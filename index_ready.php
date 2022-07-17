@@ -1,91 +1,6 @@
 <link rel="shortcut icon" href="iiitshort.png" type="image/x-icon"/>
-<body>
-    <header class="header-banner" id="i28v">
-      <div class="container-width" id="iv52">
-        <div class="logo-container" id="i8pl">
-          <div class="logo" id="i9wk">
-            <img src=iiitlogo.png alt="Indian Institute of Information Technology, Dharwad" style="width:300px; height:86px" />
-          </div>
-        </div>
-        <nav class="menu" id="i52r">
-          <div class="menu-item" id="ie64">Center for Geospatial Analytics Research
-          </div>
-        </nav>
-        <div class="clearfix">
-        </div>
-      </div>
-    </header>
-
-    <section class="am-sect" id="i15cj">
-      <div class="container-width" id="iftmq">
-        <div class="am-container" id="i6t8o">
-          <img src="map.png" class="img-phone" id="izag5"/>
-          <div class="am-content">
-            <br><br><br><br><br><br><br>
-            <div class="am-title" id="ie6ia">Visualize <span style="color:green">Karnataka </span>Healthcare Information
-            </div>
-            <div class="am-desc" id="iwa2p">Upload your dataset:
-            </div>
-            
-    <?php
-
-    // creating directory to store files
-    // designing user interface
-
-    ?>
-
-    <form method="POST" enctype="multipart/form-data" action="upload.php">
-    <input type="file" name="file">
-    <input type="submit" value="Upload" onclick=<?php $t=time() ?>>
-  
-    </form>
-    <?php
-
-    $files = scandir("uploads");
-    for ($a = 2; $a < count($files); $a++) {
-    ?>
-        <p>
-   
-        <a downloads="" href="uploads/<?php echo $files[$a]?>" ><?php echo $files[$a] ?> </a>
-    </p>
-    <?php
-   
-}
-?>
-
-<script type="text/javascript">
-window.onload = function(){//window.addEventListener('load',function(){...}); (for Netscape) and window.attachEvent('onload',function(){...}); (for IE and Opera) also work
-    alert('Your map has been plotted 🚀🚀');
-}
-</script>
-
-
-<div class="am-post" id="irv7z">Last submitted at: <?php echo gmdate("Y-m-d\ H:i:s\ ", $t+19800); ?>
-</div>
-<br><br>
-
-<?php
-
-?>
-
-<form action="visualize.php">
-<button type="submit" onclick="alertFunction()" >Visualize</button>
-<script> 
-function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
-</script>
-</form>
-<br>
-
-
-
-<button onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-  </body>
-  <style>* {
+<head>
+<style>* {
     box-sizing: border-box;
     }
     body {
@@ -96,7 +11,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
     }
     .header-banner{
       padding-top:35px;
-      padding-bottom:100px;
+      padding-bottom:10px;
       color:#ffffff;
       font-family:Helvetica, serif;
       font-weight:100;
@@ -106,6 +21,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
       background-size:contain, cover;
     }
     .container-width{
+      background-color:#CCE70B;
       width:100%;
       max-width:1150px;
       margin:0 auto;
@@ -115,7 +31,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
       width:50%;
     }
     .logo{
-      background-color:#fff;
+      background-color:#CCE70B;
       border-radius:5px;
       height: 4px;
       width: 1px;
@@ -129,6 +45,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
     .menu{
       float:right;
       width:50%;
+      padding-right: 70;
     }
     .menu-item{
       float:right;
@@ -140,11 +57,17 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
       text-align:center;
       line-height:30px;
       font-weight:300;
+      padding-right: 70;
     }
     .am-sect{
       padding-top:10px;
       padding-bottom:100px;
       font-family:Helvetica, serif;
+    }
+    .container-width{
+      width:100%;
+      max-width:1150px;
+      margin:0 auto;
     }
     .img-phone{
       float:left;
@@ -152,10 +75,10 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
     .am-container{
       display: flex;
       flex-wrap:wrap;
-      justify-content:left;
+      justify-content:center;
     }
     #izag5{
-        width:600px;
+        width:500px;
     }
     .am-content{
       float:center;
@@ -167,7 +90,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
     }
     .am-title{
       padding:7px;
-      font-size:25px;
+      font-size:55px;
       font-weight:300;
     }
     .am-desc{
@@ -189,4 +112,108 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
     #i9wk{
       width:600px;
     }
+    .footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: #cce70b;
+  color: #041e3f;
+  text-align: center;
+  font-weight: bold;
+}
+
   </style>
+</head>
+<body>
+    <header class="header-banner" id="i28v">
+      <div class="container-width" id="iv52">
+        <div class="logo-container" id="i8pl">
+          <div class="logo" id="i9wk">
+          <img src="khfwd.png" alt="Dept. of Health and Familiy Welfare Services" style="width:140px; height:110px">
+          <br>
+          <span style = "font-weight: bold; color: red" >Dept. of Health and Family Welfare Services</span> 
+        </div>
+        </div>
+        <nav class="menu" id="i52r">
+          <div class="menu-item" id="ie64">
+          <img src=iiitlogo.png alt="Indian Institute of Information Technology, Dharwad" style="width:300px; height:86px" />
+          
+          <span style = "font-weight: bold; color: #041E3F" >Knowledge Partner to Dept. of Health and Family Welfare Services</span></div>
+        </nav>
+        <div class="clearfix">
+        </div>
+      </div>
+    </header>
+    <section class="am-sect" id="i15cj">
+      <div class="container-width-1" id="iftmq">
+        <div class="am-container" id="i6t8o">
+          
+          <img src="map.png" class="img-phone" id="izag5"/>
+          <div class="am-content">
+            <br><br><br><br>
+            <div class="am-title" id="ie6ia">Visualize <span style="color:green">Karnataka's </span><span style="font-size:37.5px;">Telemedicine Facility Utilisation</span>
+            </div>
+            <div class="am-desc" id="iwa2p">Upload your dataset:
+            </div>
+            
+    <?php
+
+    // creating directory to store files
+    // designing user interface
+
+    ?>
+
+    <form method="POST" enctype="multipart/form-data" action="upload.php" style="background-color: #041E3F; border: none; border-radius: 5px; color: white; /* Dark grey */ padding: 15px 32px">
+    <input type="file" name="file">
+    <input type="submit" value="Upload" onclick=<?php $t=time() ?>>
+  
+    </form>
+    <?php
+
+    $files = scandir("uploads");
+    for ($a = 2; $a < count($files); $a++) {
+    ?>
+        <p>
+   
+        <a downloads="" href="uploads/<?php echo $files[$a]?>" ><?php echo $files[$a] ?> </a>
+    </p>
+    <?php
+   
+}
+?>
+
+
+<div class="am-post" id="irv7z">Last submitted at: <?php echo gmdate("Y-m-d\ H:i:s\ ", $t+19800); ?>
+</div>
+<br><br>
+
+<?php
+
+?>
+
+<form action="visualize.php">
+<button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" type="submit" onclick="alertFunction()" >Visualize</button>
+<script> 
+function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
+</script>
+</form>
+
+<button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
+ 
+</div>
+
+ </div>
+</div>
+        <div class='footer' style="text-align: center;">
+          © HFWS, Govt. of Karnataka. Powered by IIIT Dharwad
+</div>
+      
+    </section>
+        <div class='footer' style="text-align: center; position: fixed;">
+          © HFWS, Govt. of Karnataka. Powered by Pekanu Research Group, IIIT Dharwad
+</div>
+    
+  </body>
+  
