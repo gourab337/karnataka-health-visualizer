@@ -20,7 +20,7 @@ from bokeh.models import (CDSView, ColorBar, ColumnDataSource,
                           GeoJSONDataSource, HoverTool,
                           CategoricalColorMapper, LinearColorMapper, Slider)
 from bokeh.models import ColumnDataSource, Grid, LinearAxis, Plot, Text, LabelSet
-from bokeh.io import output_file, save, export_png
+from bokeh.io import output_file, save, export_png, export_svgs
 from bokeh.io import show
 import json
 import geopandas as gpd
@@ -256,4 +256,7 @@ current_time = now.strftime("%H:%M:%S")
 st = 'plot.html'
 export_png(q, filename="plot.png")
 output_file(st, mode='inline')
+
+q.output_backend = 'svg'
+export_svgs(q, filename = "plot.svg")
 save(q)
