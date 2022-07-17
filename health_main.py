@@ -118,7 +118,7 @@ while i<len(thwcList):
 #---------------part 3
 import json
 from bokeh.io import show
-from bokeh.io import output_file, save
+from bokeh.io import output_file, save, export_png
 from bokeh.models import ColumnDataSource, Grid, LinearAxis, Plot, Text, LabelSet
 from bokeh.models import (CDSView, ColorBar, ColumnDataSource,
                           CustomJS, CustomJSFilter, 
@@ -226,24 +226,6 @@ now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
 st='plot.html'
+export_png(q, filename="plot.png")
 output_file(st, mode='inline')
 save(q)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
