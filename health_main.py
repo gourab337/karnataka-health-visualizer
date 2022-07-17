@@ -137,9 +137,7 @@ while i < len(thwcList):
     i += 1
 # ---------------part 2
 
-<<<<<<< Updated upstream
 # ---------------part 3
-=======
 #---------------part 3
 import json
 from bokeh.io import show
@@ -154,7 +152,6 @@ from bokeh.io import output_notebook
 from bokeh.plotting import figure
 from bokeh.palettes import brewer
 from bokeh.io import export_png
->>>>>>> Stashed changes
 
 feature_list = [districtList, hwcsList, loginList, thwcList, topdList]
 source_list = []

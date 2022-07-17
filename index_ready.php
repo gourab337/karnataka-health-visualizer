@@ -201,6 +201,8 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
 </form>
 
 <button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
+
+<button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" onclick="window.location.href='plot.html'">Download Plot 🗺️</button>
  
 </div>
 
