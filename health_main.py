@@ -10,9 +10,29 @@ Original file is located at
 # !pip install geopandas
 # !pip install pyshp
 
+from datetime import datetime
+from bokeh.palettes import brewer
+from bokeh.plotting import figure
+from bokeh.io import output_notebook
+from bokeh.layouts import column, row, widgetbox
+from bokeh.models import (CDSView, ColorBar, ColumnDataSource,
+                          CustomJS, CustomJSFilter,
+                          GeoJSONDataSource, HoverTool,
+                          CategoricalColorMapper, LinearColorMapper, Slider)
+from bokeh.models import ColumnDataSource, Grid, LinearAxis, Plot, Text, LabelSet
+from bokeh.io import output_file, save, export_png
+from bokeh.io import show
+import json
 import geopandas as gpd
 import pandas as pd
 import numpy as np
+from selenium import webdriver
+import chromedriver_autoinstaller
+
+
+chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+                                      # and if it doesn't exist, download it automatically,
+                                      # then add chromedriver to path
 
 # !git clone https://github.com/vik4114/map.git
 
@@ -24,194 +44,186 @@ df1.head()
 points = df1.copy()
 points.geometry = points['geometry'].centroid
 # same crs
-points.crs =df1.crs
+points.crs = df1.crs
 # print(points['geometry'][0])
 
-#------------part 2
-x=[]
-y=[]
+# ------------part 2
+x = []
+y = []
 for i in points['geometry']:
-  x.append(i.x)
-  y.append(i.y)
+    x.append(i.x)
+    y.append(i.y)
 # print(y)
 
-#for bengaluru(rural)
+# for bengaluru(rural)
 beng_x = [x.pop(20)]
 beng_y = [y.pop(20)]
 
 df1 = df1.rename(columns={'KGISDist_1': 'District'})
 
-import pandas as pd
-zones = pd.read_csv ("uploads/dataset.csv")
+zones = pd.read_csv("uploads/dataset.csv")
 
 # zones = pd.read_csv('drive/MyDrive/31.csv')
 
-lis=[]
-i=0
-while(i<zones.shape[0]):
-  if int(zones['%HWC'][i])>=50 and int(zones['%HWC'][i])<60 :
-    lis.append('Green1')
-  elif int(zones['%HWC'][i])>=60 and int(zones['%HWC'][i])<70 :
-    lis.append('Green2')
-  elif int(zones['%HWC'][i])>=70 and int(zones['%HWC'][i])<80 :
-    lis.append('Green3')
-  elif int(zones['%HWC'][i])>=80 and int(zones['%HWC'][i])<90 :
-    lis.append('Green4')
-  elif int(zones['%HWC'][i])>=90 and int(zones['%HWC'][i])<=100 :
-    lis.append('Green5')
-  elif int(zones['%HWC'][i])>=40 and int(zones['%HWC'][i])<50:
-    lis.append('Red1')
-  elif int(zones['%HWC'][i])>=30 and int(zones['%HWC'][i])<40:
-    lis.append('Red2')
-  elif int(zones['%HWC'][i])>=20 and int(zones['%HWC'][i])<30:
-    lis.append('Red3')
-  elif int(zones['%HWC'][i])>=10 and int(zones['%HWC'][i])<20:
-    lis.append('Red4')
-  elif int(zones['%HWC'][i])>=0 and int(zones['%HWC'][i])<10:
-    lis.append('Red5')
-  else:
-    lis.append('Gray')
-  i+=1
+lis = []
+i = 0
+while(i < zones.shape[0]):
+    if int(zones['%HWC'][i]) >= 50 and int(zones['%HWC'][i]) < 60:
+        lis.append('Green1')
+    elif int(zones['%HWC'][i]) >= 60 and int(zones['%HWC'][i]) < 70:
+        lis.append('Green2')
+    elif int(zones['%HWC'][i]) >= 70 and int(zones['%HWC'][i]) < 80:
+        lis.append('Green3')
+    elif int(zones['%HWC'][i]) >= 80 and int(zones['%HWC'][i]) < 90:
+        lis.append('Green4')
+    elif int(zones['%HWC'][i]) >= 90 and int(zones['%HWC'][i]) <= 100:
+        lis.append('Green5')
+    elif int(zones['%HWC'][i]) >= 40 and int(zones['%HWC'][i]) < 50:
+        lis.append('Red1')
+    elif int(zones['%HWC'][i]) >= 30 and int(zones['%HWC'][i]) < 40:
+        lis.append('Red2')
+    elif int(zones['%HWC'][i]) >= 20 and int(zones['%HWC'][i]) < 30:
+        lis.append('Red3')
+    elif int(zones['%HWC'][i]) >= 10 and int(zones['%HWC'][i]) < 20:
+        lis.append('Red4')
+    elif int(zones['%HWC'][i]) >= 0 and int(zones['%HWC'][i]) < 10:
+        lis.append('Red5')
+    else:
+        lis.append('Gray')
+    i += 1
 
-zones['Zone']=lis
+zones['Zone'] = lis
 zones.info()
-newdf = df1.merge(zones, on = ['District'])
-newdf = newdf.drop(columns = ['created_us', 'last_edite', 'last_edi_1','created_da'])
-#for bengaluru(rural)
+newdf = df1.merge(zones, on=['District'])
+newdf = newdf.drop(
+    columns=['created_us', 'last_edite', 'last_edi_1', 'created_da'])
+# for bengaluru(rural)
 beng_df = newdf.loc[newdf["District"] == "Bengaluru (Rural)"]
 bebg_df = pd.DataFrame(beng_df)
 beng_dist = [beng_df["District"][20]]
 beng_hwcs = ["HWCs: "+str(beng_df["HWCs"][20])]
 beng_login = ["Login: "+str(beng_df["Login"][20])]
-beng_thwc = ["HWC-T: "+str(beng_df["T- HWC"][20])+"  "+ "HWC-A: "+str(beng_df["A-HWC"][20])]
-beng_topd = ["OPD-T: "+str(beng_df["T- OPD"][20])+"   "+ "OPD-A: "+str(beng_df["A-OPD"][20])]
+beng_thwc = ["HWC-T: "+str(beng_df["T- HWC"][20]) +
+             "  " + "HWC-A: "+str(beng_df["A-HWC"][20])]
+beng_topd = ["OPD-T: "+str(beng_df["T- OPD"][20]) +
+             "   " + "OPD-A: "+str(beng_df["A-OPD"][20])]
 beng_feature = [beng_dist, beng_login, beng_hwcs, beng_thwc, beng_topd]
 # for bengaluru(rural)
 newdf = newdf.drop(20)
-districtList=[]
-hwcsList=[]
-loginList=[]
-thwcList=[]
+districtList = []
+hwcsList = []
+loginList = []
+thwcList = []
 topdList = []
 ahwcList = []
 aopdList = []
 
-i=0
-while(i<=newdf.shape[0]):
-  if i!=20:
-    districtList.append(newdf['District'][i])
-    hwcsList.append("HWCs: "+str(newdf['HWCs'][i]))
-    loginList.append("Login: "+str(newdf['Login'][i]))
-    thwcList.append("HWC-T: "+str(newdf['T- HWC'][i]))
-    topdList.append("OPD-T: "+str(newdf['T- OPD'][i]))
-    ahwcList.append("HWC-A: "+str(newdf['A-HWC'][i]))
-    aopdList.append("OPD-A: "+str(newdf['A-OPD'][i]))
-  i+=1
+i = 0
+while(i <= newdf.shape[0]):
+    if i != 20:
+        districtList.append(newdf['District'][i])
+        hwcsList.append("HWCs: "+str(newdf['HWCs'][i]))
+        loginList.append("Login: "+str(newdf['Login'][i]))
+        thwcList.append("HWC-T: "+str(newdf['T- HWC'][i]))
+        topdList.append("OPD-T: "+str(newdf['T- OPD'][i]))
+        ahwcList.append("HWC-A: "+str(newdf['A-HWC'][i]))
+        aopdList.append("OPD-A: "+str(newdf['A-OPD'][i]))
+    i += 1
 
 i = 0
-while i<len(thwcList):
-  thwcList[i] = thwcList[i]+"  "+ahwcList[i]
-  topdList[i] = topdList[i]+"  "+aopdList[i]
-  i+=1
-#---------------part 2
+while i < len(thwcList):
+    thwcList[i] = thwcList[i]+"  "+ahwcList[i]
+    topdList[i] = topdList[i]+"  "+aopdList[i]
+    i += 1
+# ---------------part 2
 
-#---------------part 3
-import json
-from bokeh.io import show
-from bokeh.io import output_file, save, export_png
-from bokeh.models import ColumnDataSource, Grid, LinearAxis, Plot, Text, LabelSet
-from bokeh.models import (CDSView, ColorBar, ColumnDataSource,
-                          CustomJS, CustomJSFilter, 
-                          GeoJSONDataSource, HoverTool,
-                          CategoricalColorMapper, LinearColorMapper, Slider)
-from bokeh.layouts import column, row, widgetbox
-from bokeh.io import output_notebook
-from bokeh.plotting import figure
-from bokeh.palettes import brewer
+# ---------------part 3
 
-feature_list = [districtList,hwcsList,loginList,thwcList,topdList]
-source_list=[]
+feature_list = [districtList, hwcsList, loginList, thwcList, topdList]
+source_list = []
 for i in feature_list:
-  source = ColumnDataSource(data=dict(x=x, y=y, names=i))
-  source_list.append(source)
+    source = ColumnDataSource(data=dict(x=x, y=y, names=i))
+    source_list.append(source)
 src = source_list[0]
 
-geosource = GeoJSONDataSource(geojson = newdf.to_json())
+geosource = GeoJSONDataSource(geojson=newdf.to_json())
 
 # bengaluru
-source_list_beng=[]
+source_list_beng = []
 for i in beng_feature:
-  source = ColumnDataSource(data=dict(x=beng_x, y=beng_y, names=i))
-  source_list_beng.append(source)
+    source = ColumnDataSource(data=dict(x=beng_x, y=beng_y, names=i))
+    source_list_beng.append(source)
 src_beng = source_list_beng[0]
 
-geosource_beng = GeoJSONDataSource(geojson = beng_df.to_json())
-#bengaluru
+geosource_beng = GeoJSONDataSource(geojson=beng_df.to_json())
+# bengaluru
 
 
 # Define color palette
-palette = ['Green1','Green2','Green3','Green4','Green5', 'Red1','Red2','Red3','Red4','Red5']
+palette = ['Green1', 'Green2', 'Green3', 'Green4',
+           'Green5', 'Red1', 'Red2', 'Red3', 'Red4', 'Red5']
 green = list(brewer["Greens"][5])
 red = list(brewer["Reds"][5])
 green.extend(red)
-color_mapper = CategoricalColorMapper(palette = green, factors = palette)
+color_mapper = CategoricalColorMapper(palette=green, factors=palette)
 
-#bengaluru
-color_mapper_beng = CategoricalColorMapper(palette = [green[-2]], factors = ["Red4"])
+# bengaluru
+color_mapper_beng = CategoricalColorMapper(
+    palette=[green[-2]], factors=["Red4"])
 
-#bengaluru
+# bengaluru
 
 # Create figure object.
-q = figure(title = 'Telemedicine Facility Utilization',
-           plot_height = 2000 ,
-           plot_width = 1500, 
-           toolbar_location = 'right',
-           tools = "pan, wheel_zoom, box_zoom, reset")
+q = figure(title='Telemedicine Facility Utilization',
+           plot_height=2000,
+           plot_width=1500,
+           toolbar_location='right',
+           tools="pan, wheel_zoom, box_zoom, reset")
 q.title.text_font_size = '12pt'
 q.title.align = 'center'
 
 q.xgrid.grid_line_color = None
 q.ygrid.grid_line_color = None
 
-labels = LabelSet(x='x', y='y', text='names', 
-              x_offset=-40, y_offset=25, source=src, render_mode='canvas',text_font_size="10pt", text_font_style="bold")
+labels = LabelSet(x='x', y='y', text='names',
+                  x_offset=-40, y_offset=25, source=src, render_mode='canvas', text_font_size="10pt", text_font_style="bold")
 q.add_layout(labels)
 y_off = 25
 for src in source_list[1:]:
-  y_off -= 15
-  labels = LabelSet(x='x', y='y', text='names', 
-                x_offset=-40, y_offset=y_off, source=src, render_mode='canvas',text_font_size="7pt", text_font_style="bold")
-  q.add_layout(labels)
+    y_off -= 15
+    labels = LabelSet(x='x', y='y', text='names',
+                      x_offset=-40, y_offset=y_off, source=src, render_mode='canvas', text_font_size="7pt", text_font_style="bold")
+    q.add_layout(labels)
 
-#bengaluru
-labels = LabelSet(x='x', y='y', text='names', 
-              x_offset=-65, y_offset=37, source=src_beng, render_mode='canvas',text_font_size="10pt", text_font_style="bold")
+# bengaluru
+labels = LabelSet(x='x', y='y', text='names',
+                  x_offset=-65, y_offset=37, source=src_beng, render_mode='canvas', text_font_size="10pt", text_font_style="bold")
 q.add_layout(labels)
 y_off = 37
 for src in source_list_beng[1:]:
-  y_off -= 12
-  labels = LabelSet(x='x', y='y', text='names', 
-                x_offset=-65, y_offset=y_off, source=src, render_mode='canvas',text_font_size="7pt",text_font_style="bold")
-  q.add_layout(labels)
-#bengaluru
+    y_off -= 12
+    labels = LabelSet(x='x', y='y', text='names',
+                      x_offset=-65, y_offset=y_off, source=src, render_mode='canvas', text_font_size="7pt", text_font_style="bold")
+    q.add_layout(labels)
+# bengaluru
 
 # Add patch renderer to figure.
-states = q.patches('xs','ys', source = geosource,
-                   fill_color = {'field' :'Zone',
-                                 'transform' : color_mapper},
-                   line_color = 'black',
-                   line_width = 0.25, 
-                   fill_alpha = 1)
+states = q.patches('xs', 'ys', source=geosource,
+                   fill_color={'field': 'Zone',
+                               'transform': color_mapper},
+                   line_color='black',
+                   line_width=0.25,
+                   fill_alpha=1)
 
-#bengaluru
-states = q.patches('xs','ys', source = geosource_beng,
-                   fill_color = {'field' :'Zone',
-                                 'transform' : color_mapper_beng},
-                   line_color = 'black',
-                   line_width = 0.25, 
-                   fill_alpha = 1)
+# bengaluru
+states = q.patches('xs', 'ys', source=geosource_beng,
+                   fill_color={'field': 'Zone',
+                               'transform': color_mapper_beng},
+                   line_color='black',
+                   line_width=0.25,
+                   fill_alpha=1)
 
-#bengaluru
+# bengaluru
 """
 # Create hover tool
 p.add_tools(HoverTool(renderers = [states],
@@ -219,13 +231,12 @@ p.add_tools(HoverTool(renderers = [states],
                                   ('Range','@Range')
                                  ]))
 """
-#---------------part 3
-#---------------part 4
-from datetime import datetime
+# ---------------part 3
+# ---------------part 4
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
-st='plot.html'
+st = 'plot.html'
 export_png(q, filename="plot.png")
 output_file(st, mode='inline')
 save(q)
