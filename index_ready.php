@@ -200,9 +200,11 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
 </script>
 </form>
 
-<button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
+<button style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 27px" onclick="window.location.href='plot.html'">Show my Plot 🔥</button>
 
-<a style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 32px" href="plot.svg" download="plot.svg">Download Plot 🗺️</a>
+<a style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 27px" href="plot.svg" download="plot.svg">Download SVG 🗺️</a>
+
+<a style = "background-color: #041E3F; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; color: white; /* Text color */ padding: 15px 27px" href="plot.png" download="plot.png">Download PNG 🗺️</a>
  
 </div>
 
@@ -214,7 +216,7 @@ function alertFunction() { alert("Your map is being plotted 🚀🚀"); }
       
     </section>
         <div class='footer' style="text-align: center; position: fixed;">
-          © HFWS, Govt. of Karnataka. Powered by Pekanu Research Group, IIIT Dharwad
+          © HFWS, Govt. of Karnataka. Powered by IIIT Dharwad
 </div>
     
   </body>

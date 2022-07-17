@@ -236,7 +236,7 @@
 
   </section>
   <div class='footer' style="text-align: center; position: fixed;">
-    © HFWS, Govt. of Karnataka. Powered by Pekanu Research Group, IIIT Dharwad
+    © HFWS, Govt. of Karnataka. Powered by IIIT Dharwad
   </div>
 
 </body>
